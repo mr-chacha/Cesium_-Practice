@@ -6,20 +6,22 @@ import {
   Math as CesiumMath,
   Transforms,
   Ion,
+  Cartographic,
 } from "cesium";
 
 import "cesium/Build/Cesium/Widgets/widgets.css";
-// import "../public/cesium/Assets/Glb/Cesium_Air.glb";
 
-Ion.defaultAccessToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiZDM4YThjZi1jMTVhLTRlN2ItYTFhNi0wNTA0MWMzMDhmNWEiLCJpZCI6MjMwNDU5LCJpYXQiOjE3MjE4MTI0MzB9.IaT-OLUu3bForPze6C6M_6xCLiY_I43k3PZQ4h-IrgA";
+Ion.defaultAccessToken = process.env.REACT_APP_CESIUM_TOKEN;
 
 function App() {
   const viewerRef = useRef(null);
   const [droneModel, setDroneModel] = useState(null);
 
+  const [longitude, setLongitude] = useState(127.0462);
+  const [latitude, setLatitude] = useState(37.2599);
+
   useEffect(() => {
-    const position = Cartesian3.fromDegrees(127.0462, 37.2599, 150.0);
+    const position = Cartesian3.fromDegrees(longitude, latitude, 150.0);
     const heading = CesiumMath.toRadians(135);
     const pitch = 0;
     const roll = 0;
@@ -39,11 +41,24 @@ function App() {
         }}
       />
     );
-  }, []);
+  }, [longitude, latitude]);
+
+  const handleClick = (e) => {
+    const viewer = viewerRef.current.cesiumElement;
+    const scene = viewer.scene;
+    const cartesian = scene.pickPosition(e.position);
+    if (cartesian) {
+      const cartographic = Cartographic.fromCartesian(cartesian);
+      const latitude = CesiumMath.toDegrees(cartographic.latitude);
+      const longitude = CesiumMath.toDegrees(cartographic.longitude);
+      setLongitude(longitude);
+      setLatitude(latitude);
+    }
+  };
 
   return (
     <div style={{ width: "100%", height: "100vh" }}>
-      <Viewer full ref={viewerRef}>
+      <Viewer full ref={viewerRef} onClick={handleClick}>
         {droneModel}
       </Viewer>
     </div>
