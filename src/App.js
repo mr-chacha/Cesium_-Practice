@@ -16,7 +16,6 @@ Ion.defaultAccessToken = process.env.REACT_APP_CESIUM_TOKEN;
 function App() {
   const viewerRef = useRef(null);
   const [droneModel, setDroneModel] = useState(null);
-
   const [longitude, setLongitude] = useState(127.0462);
   const [latitude, setLatitude] = useState(37.2599);
 
