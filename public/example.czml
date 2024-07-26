@@ -1,0 +1,32 @@
+[
+  {
+    "id": "document",
+    "name": "CZML Path",
+    "version": "1.0"
+  },
+  {
+    "id": "path",
+    "name": "Simple Path",
+    "availability": "2024-07-26T00:00:00Z/2024-07-26T01:00:00Z",
+    "path": {
+      "material": {
+        "solidColor": {
+          "color": {
+            "rgba": [255, 0, 0, 255]
+          }
+        }
+      },
+      "width": 5,
+      "leadTime": 10,
+      "trailTime": 10
+    },
+    "position": {
+      "epoch": "2024-07-26T00:00:00Z",
+      "cartesian": [
+        0, 6378137, 0, 0,
+        600, 6378137, 1000000, 0,
+        1200, 6378137, 2000000, 0
+      ]
+    }
+  }
+]
